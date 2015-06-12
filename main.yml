@@ -1,0 +1,10 @@
+- name: DNS
+  hosts: all
+  sudo: true
+  tasks:
+  - name: Install asterisk
+    apt: name={{ item }} state=latest
+    with_items:
+    - asterisk
+    - asterisk-modules
+    - asterisk-mp3
