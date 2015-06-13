@@ -25,7 +25,7 @@
       group=asterisk
       mode=0640
     notify: reload asterisk
-  - name: Put extensions conf
+  - name: Put logger conf
     template: >
       src=templates/logger.conf
       dest=/etc/asterisk/logger.conf
