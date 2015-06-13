@@ -1,10 +1,35 @@
 - name: DNS
   hosts: all
   sudo: true
+  handlers:
+  - name: reload asterisk
+    service: name=asterisk state=reloaded
   tasks:
   - name: Install asterisk
     apt: name={{ item }} state=latest
     with_items:
     - asterisk
-    - asterisk-modules
-    - asterisk-mp3
+  - name: Put sip conf
+    template: >
+      src=templates/sip.conf
+      dest=/etc/asterisk/sip.conf
+      owner=asterisk
+      group=asterisk
+      mode=0640
+    notify: reload asterisk
+  - name: Put extensions conf
+    template: >
+      src=templates/extensions.conf
+      dest=/etc/asterisk/extensions.conf
+      owner=asterisk
+      group=asterisk
+      mode=0640
+    notify: reload asterisk
+  - name: Put extensions conf
+    template: >
+      src=templates/logger.conf
+      dest=/etc/asterisk/logger.conf
+      owner=asterisk
+      group=asterisk
+      mode=0640
+    notify: reload asterisk
